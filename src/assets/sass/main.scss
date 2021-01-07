@@ -15,6 +15,22 @@ body {
   margin-bottom: 30px;
 }
 
+.form-search {
+  input:focus {
+    box-shadow: none;
+    border-color: $gray-400;
+  }
+
+  input {
+    border-right: none;
+  }
+
+  .input-group-text {
+    border-left: none;
+    background-color: #FFFFFF;
+  }
+}
+
 .card-package {
   color: #FFFFFF;
   margin-top: 10px;
