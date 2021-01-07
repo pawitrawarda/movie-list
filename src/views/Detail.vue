@@ -36,7 +36,6 @@
 <script>
 // import library
 import { date } from '../commons/helper/filter'
-import debounce from 'lodash.debounce'
 
 // import service
 import MoviesService from '../services/MoviesService'
@@ -63,53 +62,13 @@ export default {
     }
   },
   created () {
-    // this.getListMovie()
     this.getDetailMovie()
   },
-  watch: {
-    search: debounce(function () {
-      this.getSearchList()
-    }, 300)
-  },
   methods: {
-    async getListMovie () {
-      const res = await movieService.getListMovie(Object.assign({}))
-      const { data } = res
-      this.listMovie = data
-      this.listFiltered = this.listMovie
-    },
-
-    getListFilterByDate () {
-      const res = this.listMovie.filter(item => {
-        return date(item.showTime, 'DD/MM/YYYY') === date(this.dateFrom, 'DD/MM/YYYY')
-      })
-      this.listFiltered = res
-    },
-    onSelectedSearchData () {
-      if (this.searchList.length > 0) {
-        const res = this.listMovie.filter(item => {
-          return item.title === this.search
-        })
-        this.listFiltered = res
-      }
-    },
-    async getSearchList () {
-      this.spinnerShow = true
-      const res = this.listMovie
-      this.spinnerShow = false
-
-      this.searchList = []
-      if (res.length > 0) {
-        res.forEach(item => {
-          this.searchList.push(item)
-        })
-      }
-    },
     async getDetailMovie () {
       const res = await movieService.getDetailMovie(Object.assign({}), this.$route.params.id)
       const { data } = res
       this.detailMovie = data
-      console.log('detail', data)
     }
   }
 }
